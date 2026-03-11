@@ -14,5 +14,8 @@ def test_node_init():
     # By default parameter map_path is empty, so matcher should be None
     assert getattr(node, 'matcher', None) is None
     
+    # We can also check if the parameter matcher_type exists and defaults to orb
+    assert node.get_parameter('matcher_type').get_parameter_value().string_value == 'orb'
+    
     node.destroy_node()
     rclpy.shutdown()

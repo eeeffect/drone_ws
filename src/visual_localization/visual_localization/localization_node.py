@@ -13,17 +13,20 @@ class VisualLocalizationNode(Node):
         
         # Declare parameters
         self.declare_parameter('map_path', '')
+        self.declare_parameter('matcher_type', 'orb')
+        
         map_path = self.get_parameter('map_path').get_parameter_value().string_value
+        matcher_type = self.get_parameter('matcher_type').get_parameter_value().string_value
         
         if not map_path:
             self.get_logger().error("Map path parameter 'map_path' not set! Cannot initialize MapMatcher.")
             self.matcher = None
         else:
             try:
-                self.matcher = MapMatcher(map_path)
-                self.get_logger().info(f"Successfully loaded map from {map_path}")
+                self.matcher = create_matcher(matcher_type, map_path)
+                self.get_logger().info(f"Successfully loaded map from {map_path} using matcher: {matcher_type}")
             except Exception as e:
-                self.get_logger().error(f"Failed to initialize MapMatcher: {e}")
+                self.get_logger().error(f"Failed to initialize matcher '{matcher_type}': {e}")
                 self.matcher = None
             
         self.bridge = CvBridge()

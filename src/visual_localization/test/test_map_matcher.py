@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import pytest
 import tempfile
-from visual_localization.map_matcher import MapMatcher
+from visual_localization.map_matcher import create_matcher, ORBMatcher
 
 @pytest.fixture
 def synthetic_map():
@@ -36,7 +36,7 @@ def synthetic_map():
 
 def test_map_matcher_exact_subimage(synthetic_map):
     map_path, map_img = synthetic_map
-    matcher = MapMatcher(map_path)
+    matcher = create_matcher('orb', map_path)
     
     # Crop a 200x200 region from the center (400 to 600)
     # The center of this region in the map is at (500, 500)
@@ -56,7 +56,7 @@ def test_map_matcher_exact_subimage(synthetic_map):
 
 def test_map_matcher_rotated_subimage(synthetic_map):
     map_path, map_img = synthetic_map
-    matcher = MapMatcher(map_path)
+    matcher = create_matcher('orb', map_path)
     
     # Crop a region
     frame = map_img[300:600, 300:600].copy()  # 300x300 center at 450, 450
@@ -85,7 +85,7 @@ def test_map_matcher_rotated_subimage(synthetic_map):
 
 def test_map_matcher_no_match(synthetic_map):
     map_path, _ = synthetic_map
-    matcher = MapMatcher(map_path)
+    matcher = create_matcher('orb', map_path)
     
     # Blank frame, should fail
     blank_frame = np.zeros((200, 200), dtype=np.uint8)
