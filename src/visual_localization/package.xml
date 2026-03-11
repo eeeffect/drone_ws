@@ -4,7 +4,7 @@
   <name>visual_localization</name>
   <version>0.0.1</version>
   <description>GNSS-denied visual localization for drones using predefined maps</description>
-  <maintainer email="user@todo.todo">User</maintainer>
+  <maintainer email="eeeffect@gmail.com">AxeEffect</maintainer>
   <license>MIT</license>
 
   <depend>rclpy</depend>
